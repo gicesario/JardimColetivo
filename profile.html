@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Compartilhe e Cultive</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+    <style>
+        body {
+            background-color: #eaefdd;
+        }
+
+        .container {
+            background-color: ivory;
+            padding-bottom: 10em;
+        }
+
+        .profile-banner {
+            background: url('img/banner_horta.webp') no-repeat center center;
+            background-size: cover;
+            height: 250px;
+            position: relative;
+        }
+
+        .profile-picture {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid white;
+            position: absolute;
+            top: 150px;
+            /* Ajuste este valor conforme necessário */
+            left: 20px;
+            /* Centraliza a imagem */
+        }
+
+        .card-img-top {
+            width: 100%;
+            /* Faz a imagem ocupar 100% da largura do cartão */
+            height: 200px;
+            /* Define uma altura fixa para a imagem */
+            object-fit: cover;
+            /* Garante que a imagem cubra a área designada sem perder suas proporções */
+        }
+
+        .card-footer {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: column;
+        }
+
+        .dz-preview .dz-progress {
+            display: none;
+        }
+
+        .dropzone .dz-preview .dz-image {
+            width: auto;
+            height: auto;
+        }
+
+        .dropzone .dz-preview .dz-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Isso garante que a imagem cubra a área sem perder a proporção */
+        }
+
+        .dz-image {
+            position: relative;
+            /* Necessário para posicionar corretamente o texto do pseudo-elemento */
+            border-radius: 25px;
+            border: 4px solid #ffffff;
+        }
+
+        /* Estilos para o primeiro item da lista */
+        #productImagesDropzone .dz-preview:nth-of-type(2) .dz-image {
+            border: 4px dashed #73AD21;
+        }
+
+        /* Adiciona o texto 'Imagem Principal' acima do primeiro item */
+        #productImagesDropzone .dz-preview:nth-of-type(2)::before {
+            content: 'Foto de Capa';
+            display: block;
+            position: absolute;
+            top: -30px;
+            /* Ajuste conforme necessário */
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: #73AD21;
+            /* Cor do texto */
+            background: #ffffff;
+            /* Cor de fundo para destacar o texto */
+            padding: 2px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Opcional: sombra para o texto */
+        }
+
+
+        /* SOLICITAÇÕES */
+        #solicitationsList a {
+            transition: box-shadow 0.2s ease-in-out;
+        }
+
+        #solicitationsList a:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #solicitationsList .bi-envelope-fill {
+            color: green;
+            /* Ícone para mensagens não lidas */
+        }
+
+        #solicitationsList .bi-envelope-open-fill {
+            color: grey;
+            /* Ícone para mensagens lidas */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-12 mb-5 profile-banner">
+                <!-- Foto de Perfil -->
+                <img src="img/perfil.jfif" class="profile-picture" alt="Foto de Perfil">
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2>Seu Perfil</h2>
+                <p>Aqui você pode gerenciar suas informações, produtos e interesses.</p>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-3">
+                <div class="list-group">
+                    <!-- Informações do Perfil -->
+                    <a href="#profile-info" class="list-group-item list-group-item-action">
+                        <i class="bi bi-person-fill"></i> Perfil
+                    </a>
+                    <!-- Produtos Cadastrados -->
+                    <a href="#registered-products" class="list-group-item list-group-item-action">
+                        <i class="bi bi-basket-fill"></i> Produtos Cadastrados
+                    </a>
+                    <!-- Cadastrar Produtos -->
+                    <a href="#add-products" class="list-group-item list-group-item-action">
+                        <i class="bi bi-plus-square-fill"></i> Cadastrar Produtos
+                    </a>
+                    <!-- Solicitações -->
+                    <a href="#requests" class="list-group-item list-group-item-action">
+                        <i class="bi bi-envelope-fill"></i> Solicitações
+                    </a>
+                    <!-- Buscar Produtos -->
+                    <a href="#search-products" class="list-group-item list-group-item-action">
+                        <i class="bi bi-search"></i> Buscar Produtos
+                    </a>
+                    <!-- Interesses -->
+                    <a href="#interests" class="list-group-item list-group-item-action">
+                        <i class="bi bi-heart-fill"></i> Interesses
+                    </a>
+                    <!-- Interesses -->
+                    <a href="#add-interests" class="list-group-item list-group-item-action">
+                        <i class="bi bi-bookmark-heart-fill"></i> Adicionar Interesses
+                    </a>
+                </div>
+            </div>
+
+            <!-- Conteúdo do Perfil -->
+            <div class="col-md-9">
+                <!-- Informações do Perfil -->
+                <div id="profile-info" class="profile-content">
+                    <h3>Informações Pessoais</h3>
+                    <p><strong>Nome:</strong> Maria Silva</p>
+                    <p><strong>Email:</strong> maria.silva@example.com</p>
+                    <p><strong>Interesses:</strong> Cultivo de ervas, troca de sementes, jardinagem comunitária</p>
+                </div>
+
+                <!-- Produtos Cadastrados -->
+                <div id="registered-products" class="profile-content d-none">
+                    <h3>Produtos Cadastrados</h3>
+
+                    <div class="py-3">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#disponiveis">Disponíveis</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#indisponiveis">Indisponíveis</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="disponiveis" class="products-list tab-pane fade show active">
+                                <div class="list-group" id="availableProductsList">
+                                    <!-- Produto 1: Nabo Daikon -->
+                                    <div
+                                        class="list-group-item shadow-sm p-3 mb-3 bg-white rounded d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <img src="img/nabo.jpg" alt="Nabo Daikon" class="img-thumbnail mr-3"
+                                                style="width: 100px; height: 100px; object-fit: cover;">
+                                            <div>
+                                                <h5 class="mb-1">Nabo Daikon</h5>
+                                                <p class="mb-1">Categoria: Raízes</p>
+                                                <p class="mb-1">Finalidade: Troca</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-primary btn-sm mr-2"><i
+                                                    class="bi bi-pencil-square"></i> Editar</button>
+                                            <button class="btn btn-danger btn-sm"><i class="bi bi-x-square"></i>
+                                                Excluir</button>
+                                        </div>
+                                        <div class="position-absolute" style="bottom: 10px; right: 10px;">
+                                            <button class="btn btn-link btn-sm"><i class="bi bi-arrow-left-right"></i>
+                                                Tornar indisponivel?</button>
+                                        </div>
+                                    </div>
+                                    <!-- Produto 2: Limão Rosa -->
+                                    <div
+                                        class="list-group-item shadow-sm p-3 mb-3 bg-white rounded d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <img src="img/limao.jpg" alt="Limão Rosa" class="img-thumbnail mr-3"
+                                                style="width: 100px; height: 100px; object-fit: cover;">
+                                            <div>
+                                                <h5 class="mb-1">Limão Rosa</h5>
+                                                <p class="mb-1">Categoria: Frutas</p>
+                                                <p class="mb-1">Finalidade: Doação</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-primary btn-sm mr-2"><i
+                                                    class="bi bi-pencil-square"></i> Editar</button>
+                                            <button class="btn btn-danger btn-sm"><i class="bi bi-x-square"></i>
+                                                Excluir</button>
+                                        </div>
+                                        <div class="position-absolute" style="bottom: 10px; right: 10px;">
+                                            <button class="btn btn-link btn-sm"><i class="bi bi-arrow-left-right"></i>
+                                                Tornar indisponivel?</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="indisponiveis" class="products-list tab-pane fade">
+                                <div class="list-group" id="unavailableProductsList">
+                                    <!-- Produto 3: Tomates Orgânicos -->
+                                    <div
+                                        class="list-group-item shadow-sm p-3 mb-3 bg-white rounded d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <img src="img/tomate.jpg" alt="Tomates Orgânicos" class="img-thumbnail mr-3"
+                                                style="width: 100px; height: 100px; object-fit: cover;">
+                                            <div>
+                                                <h5 class="mb-1">Tomates Orgânicos</h5>
+                                                <p class="mb-1">Categoria: Hortifruti</p>
+                                                <p class="mb-1">Finalidade: Doação</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-primary btn-sm mr-2"><i
+                                                    class="bi bi-pencil-square"></i> Editar</button>
+                                            <button class="btn btn-danger btn-sm"><i class="bi bi-x-square"></i>
+                                                Excluir</button>
+                                        </div>
+                                        <div class="position-absolute" style="bottom: 10px; right: 10px;">
+                                            <button class="btn btn-link btn-sm"><i class="bi bi-arrow-left-right"></i>
+                                                Tornar disponivel?</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Cadastrar Produtos -->
+                <div id="add-products" class="profile-content d-none">
+                    <h3>Cadastrar Novos Produtos</h3>
+                    <p>Formulário para adicionar novos produtos ao seu perfil.</p>
+                    <!-- Formulário simplificado para adicionar produtos -->
+                    <form id="product-form">
+
+                        <!-- Nome do Produto -->
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">Nome do Produto</label>
+                            <input type="text" class="form-control" id="productName" required>
+                        </div>
+
+                        <!-- Comentários sobre o Produto -->
+                        <div class="mb-3">
+                            <label for="productComments" class="form-label">Comentários sobre o Produto</label>
+                            <textarea class="form-control" id="productComments" rows="3"></textarea>
+                        </div>
+
+                        <!-- Quantidade do Produto -->
+                        <div class="mb-5">
+                            <label for="productQuantity" class="form-label">Quantidade/Disponíbilidade</label>
+                            <input type="text" class="form-control" id="productQuantity"
+                                placeholder="Ex: 1kg, 500g, 3 unidades, 'Até o fim da colheita', etc.">
+                            <div class="form-text">( Você pode fornecer a descrição que achar mais relevante para a
+                                quantidade.)</div>
+                        </div>
+
+                        <!-- Dropzone para Upload de Imagens -->
+                        <div class="mb-5">
+                            <label for="productImagesDropzone" class="form-label">Imagens do Produto</label>
+                            <h6>Arraste para a primeira posição para tornar a foto de capa.</h6>
+                            <div id="productImagesDropzone" class="dropzone"></div>
+                            <div id="productImagesPreview" class="dropzone-previews"></div>
+                            <div class="mt-1">
+                                <button id="dropzoneButton" class="btn btn-success">
+                                    <i class="bi bi-plus-circle"></i> Adicionar Imagens
+                                </button>
+                                <p>( Maximo de 6 imagens com no maximo 2Mb cada. )</p>
+                            </div>
+                        </div>
+
+                        <!-- Categoria do Produto -->
+                        <div class="mb-3">
+                            <label for="productCategory" class="form-label">Categoria do Produto</label>
+                            <select class="form-select" id="productCategory" required>
+                                <option selected>Escolha uma categoria...</option>
+                                <option value="vegetables">Vegetais</option>
+                                <option value="fruits">Frutas</option>
+                                <option value="herbs">Ervas</option>
+                                <option value="seeds">Sementes</option>
+                                <option value="sprouts">Mudas</option>
+                                <option value="other">Outros</option>
+                            </select>
+                        </div>
+
+                        <!-- Finalidade do Produto -->
+                        <div class="mb-3">
+                            <label for="productPurpose" class="form-label">Finalidade do Produto</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="productPurpose" id="donation"
+                                    value="donation" checked>
+                                <label class="form-check-label" for="donation">
+                                    Doação
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="productPurpose" id="exchange"
+                                    value="exchange">
+                                <label class="form-check-label" for="exchange">
+                                    Troca
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Botão de Submissão -->
+                        <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
+                    </form>
+                </div>
+
+                <!-- Solicitações -->
+                <div id="requests" class="profile-content d-none">
+                    <h3>Solicitações Recebidas</h3>
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="list-group" id="solicitationsList">
+                                <!-- Solicitação 1 -->
+                                <a href="#"
+                                    class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Tomates Orgânicos - João Silva</h5>
+                                        <small><i class="bi bi-envelope-fill"></i> Não lida</small>
+                                    </div>
+                                    <p class="mb-1">Oi, estou interessado nos seus tomates orgânicos. Ainda estão
+                                        disponíveis?</p>
+                                    <small>3 minutos atrás</small>
+                                </a>
+                                <!-- Solicitação 2 -->
+                                <a href="#"
+                                    class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Mudas de Manjericão - Maria Antônia</h5>
+                                        <small><i class="bi bi-envelope-open-fill"></i> Lida</small>
+                                    </div>
+                                    <p class="mb-1">Gostaria de confirmar a troca para amanhã.</p>
+                                    <small>1 hora atrás</small>
+                                </a>
+                                <!-- Solicitação 3 -->
+                                <a href="#"
+                                    class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Beterraba - Lauro</h5>
+                                        <small><i class="bi bi-envelope-open-fill"></i> Lida</small>
+                                    </div>
+                                    <p class="mb-1">Olá, ainda tem algumas?</p>
+                                    <small>2 dia atrás</small>
+                                </a>
+                                <!-- Adicione mais solicitações conforme necessário -->
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Buscar Produtos -->
+                <div id="search-products" class="profile-content d-none">
+                    <h3>Buscar Produtos</h3>
+                    <p>Utilize a barra de busca para encontrar produtos disponíveis na comunidade.</p>
+                    <form id="search-form" class="mb-5">
+                        <div class="form-group">
+                            <label for="inputSearch">Nome do Produto</label>
+                            <input type="text" class="form-control" id="inputSearch"
+                                placeholder="Digite o que está procurando">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputCategory">Categoria</label>
+                                <select id="inputCategory" class="form-control">
+                                    <option selected>Escolha...</option>
+                                    <option value="vegetables">Vegetais</option>
+                                    <option value="fruits">Frutas</option>
+                                    <option value="herbs">Ervas</option>
+                                    <option value="seeds">Sementes</option>
+                                    <option value="sprouts">Mudas</option>
+                                    <option value="other">Outros</option>
+                                    <!-- Adicione mais categorias aqui -->
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputPurpose">Finalidade</label>
+                                <select id="inputPurpose" class="form-control">
+                                    <option selected>Escolha...</option>
+                                    <option>Troca</option>
+                                    <option>Doação</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputDistance">Distância (km)</label>
+                                <input type="number" class="form-control" id="inputDistance"
+                                    placeholder="Distancia você buscaria o produto">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </form>
+                </div>
+
+                <!-- Resultados -->
+                <div id="search-results" class="profile-content d-none">
+                    <h2>Resultados da Busca</h2>
+                    <p>Mostrando resultados para "tomates"</p>
+                    <div id="results" class="row row-cols-1 row-cols-md-3 g-4">
+
+                        <!-- Resultado 1 -->
+                        <div class="col d-flex align-items-stretch mb-3">
+                            <div class="card h-100">
+                                <img src="img/tomate.jpg" class="card-img-top" alt="Tomates">
+                                <div class="card-body">
+                                    <h5 class="card-title">Tomates Orgânicos</h5>
+                                    <p class="card-text">Tomates frescos e orgânicos, cultivados localmente. Disponível:
+                                        2kg.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn btn-link">Ver mais</a>
+                                    <a href="#" class="btn btn-success">Solicitar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Resultado 2 -->
+                        <div class="col d-flex align-items-stretch mb-3">
+                            <div class="card h-100">
+                                <img src="img/manjericao.jpg" class="card-img-top" alt="Manjericão">
+                                <div class="card-body">
+                                    <h5 class="card-title">Manjericão Fresco</h5>
+                                    <p class="card-text">Folhas de manjericão frescas e aromáticas. Disponível: 50g.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn btn-link">Ver mais</a>
+                                    <a href="#" class="btn btn-success">Solicitar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Resultado 3 -->
+                        <div class="col d-flex align-items-stretch mb-3">
+                            <div class="card h-100">
+                                <img src="img/pimentao.jpg" class="card-img-top" alt="Pimentões">
+                                <div class="card-body">
+                                    <h5 class="card-title">Pimentões Verdes</h5>
+                                    <p class="card-text">Variedade de pimentões verdes. Disponível: 1kg.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn btn-link">Ver mais</a>
+                                    <a href="#" class="btn btn-success">Solicitar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Produto 1: Cenouras Orgânicas -->
+                        <div class="col d-flex align-items-stretch mb-3">
+                            <div class="card h-100">
+                                <img src="img/cenouras.jfif" class="card-img-top" alt="Cenouras Orgânicas">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cenouras Orgânicas</h5>
+                                    <p class="card-text">Cenouras recém-colhidas, perfeitas para uma alimentação
+                                        saudável. Disponível: 1kg.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn btn-link">Ver mais</a>
+                                    <a href="#" class="btn btn-success">Solicitar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Produto 2: Alface Crespa -->
+                        <div class="col d-flex align-items-stretch mb-3">
+                            <div class="card h-100">
+                                <img src="img/alface.jpg" class="card-img-top" alt="Alface Crespa">
+                                <div class="card-body">
+                                    <h5 class="card-title">Alface Crespa</h5>
+                                    <p class="card-text">Folhas de alface crespa frescas e crocantes. Disponível: 500g.
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn btn-link">Ver mais</a>
+                                    <a href="#" class="btn btn-success">Solicitar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Produto 3: Morangos Doce Vida -->
+                        <div class="col d-flex align-items-stretch mb-3">
+                            <div class="card h-100">
+                                <img src="img/morangos.jpg" class="card-img-top" alt="Morangos Doce Vida">
+                                <div class="card-body">
+                                    <h5 class="card-title">Morangos Doce Vida</h5>
+                                    <p class="card-text">Morangos suculentos e doces, ideais para sobremesas.
+                                        Disponível: 300g.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn btn-link">Ver mais</a>
+                                    <a href="#" class="btn btn-success">Solicitar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Produto 4: Pimenta Malagueta -->
+                        <div class="col d-flex align-items-stretch mb-3">
+                            <div class="card h-100">
+                                <img src="img/pimenta.jpeg" class="card-img-top" alt="Pimenta Malagueta">
+                                <div class="card-body">
+                                    <h5 class="card-title">Pimenta Malagueta</h5>
+                                    <p class="card-text">Pimentas malaguetas ardentes, colhidas no ponto certo de
+                                        maturação. Disponível: 100g.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn btn-link">Ver mais</a>
+                                    <a href="#" class="btn btn-success">Solicitar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Produto 5: Ervas Aromáticas Mix -->
+                        <div class="col d-flex align-items-stretch mb-3">
+                            <div class="card h-100">
+                                <img src="img/ervas.jpg" class="card-img-top" alt="Ervas Aromáticas Mix">
+                                <div class="card-body">
+                                    <h5 class="card-title">Ervas Aromáticas Mix</h5>
+                                    <p class="card-text">Um mix de ervas aromáticas para temperar seus pratos.
+                                        Disponível: 200g.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn btn-link">Ver mais</a>
+                                    <a href="#" class="btn btn-success">Solicitar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Produto 6: Abóboras Mini -->
+                        <div class="col d-flex align-items-stretch mb-3">
+                            <div class="card h-100">
+                                <img src="img/aboboras.jpg" class="card-img-top" alt="Abóboras Mini">
+                                <div class="card-body">
+                                    <h5 class="card-title">Abóboras Mini</h5>
+                                    <p class="card-text">Pequenas abóboras perfeitas para decoração ou consumo
+                                        individual. Disponível: 3 unidades.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn btn-link">Ver mais</a>
+                                    <a href="#" class="btn btn-success">Solicitar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Interesses -->
+                <div id="interests" class="profile-content d-none">
+                    <h2>Meus Interesses</h2>
+                    <div id="interestsList">
+                        <!-- Exemplo de um interesse cadastrado -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Pepinos</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Categoria: Legumes | Finalidade: Troca |
+                                    Distância: Até 10km</h6>
+                                <p class="card-text">
+                                    <span class="badge badge-success">Novas Notificações</span>
+                                </p>
+                                <a href="#" class="card-link">Visualizar Busca</a>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+                                    <label class="custom-control-label" for="customSwitch1">Desativar
+                                        Notificações</label>
+                                </div>
+                                <button class="btn btn-danger btn-sm mt-2">Excluir Interesse</button>
+                            </div>
+                        </div>
+                        <!-- Repita a estrutura acima para cada interesse cadastrado -->
+                    </div>
+                </div>
+
+                <!-- Adicionar Interesses -->
+                <div id="add-interests" class="profile-content d-none">
+
+                    <h2>Cadastro de Interesses</h2>
+                    <form id="interestForm">
+                        <div class="form-group">
+                            <label for="interestProductName">Nome do Produto</label>
+                            <input type="text" class="form-control" id="interestProductName"
+                                placeholder="Digite o nome do produto">
+                        </div>
+                        <div class="form-group">
+                            <label for="interestCategory">Categoria</label>
+                            <select id="interestCategory" class="form-control">
+                                <option selected>Escolha...</option>
+                                <option value="vegetables">Vegetais</option>
+                                <option value="fruits">Frutas</option>
+                                <option value="herbs">Ervas</option>
+                                <option value="seeds">Sementes</option>
+                                <option value="sprouts">Mudas</option>
+                                <option value="other">Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="interestPurpose">Finalidade</label>
+                            <select id="interestPurpose" class="form-control">
+                                <option selected>Escolha...</option>
+                                <option>Troca</option>
+                                <option>Doação</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="interestDistance">Distância (km)</label>
+                            <input type="number" class="form-control" id="interestDistance"
+                                placeholder="A distancia você buscaria o produto">
+                        </div>
+                        <div class="form-group form-check">
+                            <input class="form-check-input" type="checkbox" id="notifyCheck">
+                            <label class="form-check-label" for="notifyCheck">
+                                Receber notificações
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cadastrar Interesse</button>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Quando um item do menu é clicado
+            $('.list-group-item-action').click(function (e) {
+                e.preventDefault(); // Impede a ação padrão do link
+
+                // Remove a classe 'active' de todos os itens do menu e adiciona ao item clicado
+                $('.list-group-item-action').removeClass('active');
+                $(this).addClass('active');
+
+                // Pega o ID da seção de conteúdo correspondente ao item do menu clicado
+                var contentToShow = $(this).attr('href');
+
+                // Esconde todas as seções de conteúdo e mostra a correta
+                $('.profile-content').addClass('d-none');
+                $(contentToShow).removeClass('d-none');
+            });
+        });
+
+        $('#search-form').submit(function (e) {
+            e.preventDefault(); // Impede a ação padrão do formulário
+
+            // Aqui você pode adicionar uma chamada AJAX para buscar os dados do servidor
+            // e gerar os resultados dinamicamente, mas para este exemplo,
+            // vamos simplesmente mostrar a div de resultados de busca que está escondida.
+
+            // Remove a classe 'active' de todos os itens do menu
+            $('.list-group-item-action').removeClass('active');
+            // Mostra a div de resultados de busca
+            $('#search-results').removeClass('d-none');
+        });
+
+        Dropzone.autoDiscover = false; // Desabilita a auto-detecção
+
+        // Configuração do Dropzone
+        const productImagesDropzone = new Dropzone("#productImagesDropzone", {
+            url: "#", // Não definimos um endpoint do servidor
+            autoProcessQueue: false, // Impede o Dropzone de enviar arquivos automaticamente
+            paramName: "file", // O nome que será usado para transferir o arquivo
+            maxFilesize: 2, // Tamanho máximo do arquivo em MB
+            acceptedFiles: "image/*", // Aceitar apenas imagens
+            dictDefaultMessage: "Arraste as imagens para cá ou clique para selecionar", // Mensagem padrão
+            addRemoveLinks: true, // Adiciona links para remover imagens
+            clickable: "#productImagesDropzone, #dropzoneButton", // Permite clicar para abrir a janela de seleção de arquivos
+            createImageThumbnails: true,
+            thumbnailWidth: 230,
+            thumbnailHeight: 230,
+            maxFile: 6
+        });
+
+        // Evento de submissão do formulário
+        document.getElementById('product-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Aqui você pode mostrar um alerta ou mensagem de sucesso
+            alert('Imagens "enviadas" com sucesso!');
+
+            // Se você quiser limpar o Dropzone após o "envio", você pode fazer isso:
+            productImagesDropzone.removeAllFiles();
+        });
+
+        // Após a inicialização do Dropzone, torna as miniaturas reordenáveis
+        $("#productImagesDropzone").sortable({
+            items: '.dz-preview',
+            cursor: 'move',
+            opacity: 0.5,
+            containment: 'parent',
+            distance: 20,
+            tolerance: 'pointer',
+        });
+
+
+        // INTERESSES
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Adicione os event listeners para os switches e botões de excluir
+            document.querySelectorAll('.custom-control-input').forEach(item => {
+                item.addEventListener('change', function () {
+                    const interestId = this.getAttribute('data-interest-id');
+                    // Atualize o texto do label
+                    const label = document.querySelector(`label[for="${this.id}"]`);
+                    label.textContent = this.checked ? 'Desativar Notificações' : 'Ativar Notificações';
+                });
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>
