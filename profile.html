@@ -123,10 +123,45 @@
             color: grey;
             /* Ícone para mensagens lidas */
         }
+
+        /* SURVEY */
+
+        .floating-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ff4800;
+            /* Cor de fundo */
+            color: white;
+            /* Cor do texto */
+            text-align: center;
+            padding: 10px;
+            box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            /* Garante que o banner fique acima de outros elementos */
+        }
+
+        .floating-banner p {
+            margin: 0;
+            display: inline;
+        }
+
+        .floating-banner a {
+            color: white;
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 
 <body>
+    <div id="floating-banner" class="floating-banner">
+        <h3>Site em desenvolvimento!</h3>
+        <p>Todos os items mostrados aqui são apenas exemplos</p>
+        <h5>Participe da nossa pesquisa! <a href="#" target="_blank">Clique aqui</a> para responder.</h5>
+    </div>
+
 
     <div class="container">
         <div class="row mb-5">
