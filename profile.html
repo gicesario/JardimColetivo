@@ -807,7 +807,72 @@
         });
 
 
-    </script>
+            // Adiciona ação ao botão "Solicitar"
+        $('.btn-success').click(function (e) {
+            e.preventDefault(); // Impede a ação padrão do link
+            // Pega o nome do produto associado ao botão clicado
+            const productName = $(this).closest('.card').find('.card-title').text();
+            // Abre a modal de solicitação com o nome do produto
+            abrirModalSolicitacao(productName);
+        });
+
+// Função para abrir a modal de solicitação
+function abrirModalSolicitacao(productName, productOwner, productOwnerEmail, distance) {
+    // Estrutura HTML da modal
+    const modalHTML = `
+        <div class="modal fade" id="solicitacao-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="exampleModalLabel">Solicitar Produto</h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Usuário que está disponibilizando:</strong> Maria da Silva </p>                        
+                        <p><strong>Email:</strong> mariasidasilva@email-teste.com</p>
+                        <p><strong>Distância:</strong> Produto está a 5km da sua região</p>                        
+                        <!--
+                        <p><strong>Usuário que está disponibilizando:</strong> ${productOwner}</p>                        
+                        <p><strong>Email:</strong> ${productOwnerEmail}</p>
+                        <p><strong>Distância:</strong> Produto está a 5km da sua região</p>
+                        <p><strong>Distância:</strong> Produto está a ${distance} km da sua região</p> 
+                        -->
+                        <p>Deseja solicitar o produto <strong>${productName}</strong>? Insira uma mensagem:</p>
+                        <textarea class="form-control" id="solicitacao-mensagem" rows="3"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-success" id="enviar-solicitacao-btn">Enviar Solicitação</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Adiciona a modal ao body
+    $('body').append(modalHTML);
+
+    // Adicione um event listener ao botão "Enviar Solicitação"
+    $('#enviar-solicitacao-btn').click(function (e) {
+        e.preventDefault();
+        // Aqui você pode adicionar a lógica para enviar a solicitação
+        // Feche a modal após o envio
+        $('#solicitacao-modal').modal('hide');
+    });
+
+    // Adicione um event listener ao botão "Fechar"
+    $('#fechar-modal-btn').click(function (e) {
+        e.preventDefault();
+        // Feche a modal
+        $('#solicitacao-modal').modal('hide');
+    });
+
+    // Abre a modal
+    $('#solicitacao-modal').modal('show');
+}
+
+ 
+</script>
 </body>
 
 </html>
