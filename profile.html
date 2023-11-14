@@ -805,6 +805,40 @@
                 });
             });
         });
+        
+        // Adiciona ação ao botão "Solicitar"
+        $('.btn-success').click(function (e) {
+            e.preventDefault(); // Impede a ação padrão do link
+            // Pega o nome do produto associado ao botão clicado
+            const productName = $(this).closest('.card').find('.card-title').text();
+            // Abre a modal de solicitação com o nome do produto
+            abrirModalSolicitacao(productName);
+        });
+
+        // Função para abrir a modal de solicitação
+        function abrirModalSolicitacao(productName) {
+            // Crie a estrutura HTML da modal aqui
+            // ...
+
+            // Adicione um event listener ao botão "Enviar Solicitação"
+            $('#enviar-solicitacao-btn').click(function (e) {
+                e.preventDefault();
+                // Aqui você pode adicionar a lógica para enviar a solicitação
+                // Feche a modal após o envio
+                $('#solicitacao-modal').modal('hide');
+            });
+
+            // Adicione um event listener ao botão "Fechar"
+            $('#fechar-modal-btn').click(function (e) {
+                e.preventDefault();
+                // Feche a modal
+                $('#solicitacao-modal').modal('hide');
+            });
+
+            // Abra a modal
+            $('#solicitacao-modal').modal('show');
+        }
+    });
 
 
     </script>
